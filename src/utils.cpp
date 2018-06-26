@@ -13,7 +13,7 @@ void pipe(const ReadableStream &source, WritableStream &dest) {
   }
 }
 
-void read_all(ReadableStream &source, std::string &out) {
+void read_all(const ReadableStream &source, std::string &out) {
   int read = 0;
   unsigned char buffer[2024];
   while (read != EOS) {
@@ -24,7 +24,7 @@ void read_all(ReadableStream &source, std::string &out) {
   }
 }
 
-std::string read_all(ReadableStream &source) {
+std::string read_all(const ReadableStream &source) {
   std::string out;
   read_all(source, out);
   return std::move(out);
