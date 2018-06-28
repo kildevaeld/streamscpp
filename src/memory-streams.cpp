@@ -22,7 +22,6 @@ int StringStream::read(unsigned char *buffer, int max_len) const {
   auto size = d->buffer.size();
 
   if (d->offset >= size) {
-    std::cout << d->offset << " " << size << std::endl;
     return EOS;
   }
 
