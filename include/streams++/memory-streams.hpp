@@ -15,6 +15,7 @@ class StringStream : public ReadableStream,
 
 public:
   StringStream(const std::string &str = std::string());
+  StringStream(const StringStream &) = delete;
   ~StringStream();
   virtual int read(unsigned char *buffer, int max_len) const;
   virtual int write(unsigned char *buffer, int len);
