@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(libarchive)
 
 
-
+add_subdirectory(vendor/workq)
 add_subdirectory(src)
 add_subdirectory(example)
 

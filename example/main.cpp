@@ -5,20 +5,20 @@ using namespace streams;
 
 int main() {
 
-  Archive a("rapper.zip");
+  // Archive a("rapper.tar.gz");
 
   // for (auto &entry : a) {
   //   std::cout << entry.path << std::endl;
   // }
 
-  {
-    auto file = a.create_file("test.txt");
+  // {
+  //   auto file = a.create_file("test.txt");
 
-    file->write((unsigned char *)"Hello", 6);
-    file->write(NULL, 0);
-  }
+  //   file->write((unsigned char *)"Hello", 6);
+  //   file->write(NULL, 0);
+  // }
 
-  std::cout << "write " << std::endl;
+  // std::cout << "write " << std::endl;
   // auto stream = a.read_file("build/CMakeCache.txt");
   // std::cout << *stream << std::endl;
   // WritableFileStream out("test_out.txt");
@@ -28,5 +28,9 @@ int main() {
   // pipe(in, out);
   // out.seek(0, std::ios::beg);
   // std::cout << "out " << out << std::endl;
-  return 0;
+  // return 0;
+
+  streams::HttpReadableStream stream;
+  streams::WritableFileStream file("test.html");
+  streams::pipe(stream, file);
 }

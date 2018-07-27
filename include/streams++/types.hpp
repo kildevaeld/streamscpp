@@ -36,4 +36,5 @@ public:
   virtual ~WritableStream(){};
   virtual int write(unsigned char *buffer, int len) = 0;
 };
+
 } // namespace streams

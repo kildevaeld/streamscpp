@@ -36,7 +36,6 @@ std::ostream &operator<<(std::ostream &os, const ReadableStream &source) {
   while (read != EOS) {
     read = source.read(buffer, 2024);
     if (read == EOS) {
-
       break;
     }
 

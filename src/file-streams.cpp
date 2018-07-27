@@ -46,7 +46,6 @@ int ReadableFileStream::read(unsigned char *buffer, int max_len) const {
     r = d->stream.gcount();
   }
 
- 
   d->offset += r;
 
   return r;
