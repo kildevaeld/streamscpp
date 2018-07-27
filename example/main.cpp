@@ -1,9 +1,48 @@
 #include <streams++/archive.hpp>
+#include <streams++/producers/directory.hpp>
+#include <streams++/producers/vector.hpp>
 #include <streams++/streams.hpp>
+#include <streams++/transformers/directory.hpp>
 
 using namespace streams;
 
+class Transform : public PackageTransformer {
+
+public:
+  bool transform(Package &p) const override {
+    // auto out = read_all(p.content());
+    printf("pack %s\n", p.path().str().c_str());
+    // std::cout << "PACK " << p.path().str() << std::endl;
+    return true;
+  }
+};
+
 int main() {
+
+  std::vector<Package> packages;
+
+  packages.emplace_back(
+      Package::create("test", read_file("../CMakeLists.txt")));
+
+  packages.emplace_back(
+      Package::create("test2", read_file("../CMakeLists.txt")));
+  packages.emplace_back(
+      Package::create("test3", read_file("../CMakeLists.txt")));
+  packages.emplace_back(
+      Package::create("test4", read_file("../CMakeLists.txt")));
+
+  packages.emplace_back(Package::create("http/response", http::get()));
+
+  auto v = new producers::VectorProducer(std::move(packages));
+
+  Chain chain;
+  chain.set_producer<producers::GlobProducer>("../src/**/*.cpp")
+      .set_producer<producers::GlobProducer>("../src/{,**/}*.cpp")
+      //.set_producer(std::unique_ptr<producers::VectorProducer>(v))
+      .add<Transform>();
+  //.add<transformers::DirectoryDestination>("output");
+
+  chain.run();
 
   // Archive a("rapper.tar.gz");
 
@@ -30,7 +69,7 @@ int main() {
   // std::cout << "out " << out << std::endl;
   // return 0;
 
-  streams::HttpReadableStream stream;
-  streams::WritableFileStream file("test.html");
-  streams::pipe(stream, file);
+  // streams::HttpReadableStream stream;
+  // streams::WritableFileStream file("test.html");
+  // streams::pipe(stream, file);
 }

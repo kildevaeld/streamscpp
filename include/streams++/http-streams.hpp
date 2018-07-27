@@ -18,4 +18,8 @@ private:
   std::unique_ptr<internal::Downloader> m_worker;
 };
 
+namespace http {
+std::unique_ptr<HttpReadableStream> get();
+} // namespace http
+
 } // namespace streams

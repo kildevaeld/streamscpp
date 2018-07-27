@@ -1,0 +1,3 @@
+[submodule "vendor/syrup-path"]
+	path = vendor/syrup-path
+	url = git@github.com:kildevaeld/syrup-path

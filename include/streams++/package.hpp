@@ -1,4 +1,5 @@
 #pragma once
+#include <streams++/path.hpp>
 #include <streams++/types.hpp>
 
 namespace streams {
@@ -13,22 +14,30 @@ public:
   Package(Package &&);
   Package &operator=(Package &&);
 
-  void set_path(const std::string &);
-  std::string path() const;
+  void set_path(const Path &);
+  Path path() const;
 
   void set_content(const std::string &content);
   void set_content(std::unique_ptr<ReadableStream> &&);
   ReadableStream &content() const;
 
-  template <typename T> static Package create(const std::string &path, T t) {
+  static Package create(const Path &path, const std::string &str) {
     Package pack;
     pack.set_path(path);
-    pack.set_content(t);
-    return std::move(pack)
+    pack.set_content(str);
+    return std::move(pack);
+  }
+
+  static Package create(const Path &path,
+                        std::unique_ptr<ReadableStream> &&stream) {
+    Package pack;
+    pack.set_path(path);
+    pack.set_content(std::move(stream));
+    return std::move(pack);
   }
 
 private:
-  std::string m_path;
+  Path m_path;
   std::unique_ptr<ReadableStream> m_content;
 };
 

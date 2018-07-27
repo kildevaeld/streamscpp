@@ -36,4 +36,6 @@ private:
   std::fstream m_stream;
 };
 
+std::unique_ptr<ReadableFileStream> read_file(const std::string &path);
+
 } // namespace streams

@@ -70,4 +70,8 @@ int WritableFileStream::write(unsigned char *buffer, int len) {
   return len;
 }
 
+std::unique_ptr<ReadableFileStream> read_file(const std::string &path) {
+  return std::unique_ptr<ReadableFileStream>(new ReadableFileStream(path));
+}
+
 } // namespace streams

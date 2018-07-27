@@ -18,9 +18,9 @@ Package &Package::operator=(Package &&other) {
   return *this;
 }
 
-void Package::set_path(const std::string &path) {}
+void Package::set_path(const Path &path) { m_path = path; }
 
-std::string Package::path() const { return m_path; }
+Path Package::path() const { return m_path; }
 
 void Package::set_content(std::unique_ptr<ReadableStream> &&stream) {
   m_content = std::move(stream);
