@@ -17,6 +17,7 @@ endif()
 
 add_subdirectory(vendor/syrup-path)
 add_subdirectory(vendor/workq)
+#add_subdirectory(vendor/httpxx-types)
 add_subdirectory(src)
 add_subdirectory(example)
 

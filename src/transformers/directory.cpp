@@ -11,6 +11,12 @@ namespace transformers {
 
 DirectoryDestination::DirectoryDestination(const std::string &path)
     : m_path(path) {
+
+  Path p(m_path);
+  if (!p.is_absolute()) {
+    m_path = p.resolve().str();
+  }
+
   if (path[path.size() - 1] != '/')
     m_path += "/";
 
@@ -23,16 +29,19 @@ bool DirectoryDestination::transform(Package &package) const {
 
   Path dest(m_path);
 
-  dest.append(package.path());
+  auto file = package.path().str();
+  utils::replace(file, package.base(), "");
+
+  dest.append(file);
 
   auto dir = dest.dir();
   if (!fs::is_directory(dir)) {
     fs::create_directories(dir);
   }
 
-  //   WritableFileStream out(dest.str());
+  WritableFileStream out(dest.str());
 
-  //   pipe(package.content(), out);
+  pipe(package.content(), out);
 
   return false;
 }

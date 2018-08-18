@@ -11,7 +11,8 @@ class Transform : public PackageTransformer {
 public:
   bool transform(Package &p) const override {
     // auto out = read_all(p.content());
-    printf("pack %s\n", p.path().str().c_str());
+
+    int v = printf("pack %s\n", p.path().str().c_str());
     // std::cout << "PACK " << p.path().str() << std::endl;
     return true;
   }
@@ -36,11 +37,12 @@ int main() {
   auto v = new producers::VectorProducer(std::move(packages));
 
   Chain chain;
-  chain.set_producer<producers::GlobProducer>("../src/**/*.cpp")
-      .set_producer<producers::GlobProducer>("../src/{,**/}*.cpp")
-      //.set_producer(std::unique_ptr<producers::VectorProducer>(v))
-      .add<Transform>();
-  //.add<transformers::DirectoryDestination>("output");
+  chain.add_producer<producers::GlobProducer>("../src/**/*.cpp")
+      .add_producer<producers::GlobProducer>("../src/{,**/}*.cpp")
+      .add_producer<producers::GlobProducer>("../{,**/}*.hpp")
+      .add_producer(std::unique_ptr<producers::VectorProducer>(v))
+      //.add<Transform>();
+      .add<transformers::DirectoryDestination>("output");
 
   chain.run();
 

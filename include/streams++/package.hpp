@@ -17,6 +17,12 @@ public:
   void set_path(const Path &);
   Path path() const;
 
+  void set_base(const std::string &);
+  std::string base() const;
+
+  void set_cwd(const std::string &cwd);
+  std::string cwd() const;
+
   void set_content(const std::string &content);
   void set_content(std::unique_ptr<ReadableStream> &&);
   ReadableStream &content() const;
@@ -38,6 +44,7 @@ public:
 
 private:
   Path m_path;
+  std::string m_base;
   std::unique_ptr<ReadableStream> m_content;
 };
 

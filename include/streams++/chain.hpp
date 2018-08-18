@@ -29,13 +29,12 @@ public:
 
   void run();
 
-  template <typename T, typename... Args> Chain &set_producer(Args... args) {
+  template <typename T, typename... Args> Chain &add_producer(Args... args) {
     PackageProducer *producer = new T(std::forward<Args>(args)...);
-    return set_producer(std::unique_ptr<PackageProducer>(producer));
+    return add_producer(std::unique_ptr<PackageProducer>(producer));
   }
 
-  Chain &set_producer(std::unique_ptr<PackageProducer> &&);
-  PackageProducer *producer() const;
+  Chain &add_producer(std::unique_ptr<PackageProducer> &&);
 
   template <typename T, typename... Args> Chain &add(Args... args) {
     PackageTransformer *transformer = new T(std::forward<Args>(args)...);

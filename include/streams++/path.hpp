@@ -59,6 +59,17 @@ public:
     return m_path.substr(idx);
   }
 
+  bool is_absolute() const { return sy_path_is_abs(m_path.c_str()); }
+
+  Path resolve() {
+    auto out = sy_path_resolve(m_path.c_str(), NULL);
+    if (!out)
+      return "";
+    Path p(out);
+    free(out);
+    return p;
+  }
+
   std::string ext() const {
     size_t idx;
     auto size = sy_path_ext(m_path.c_str(), &idx);
